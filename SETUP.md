@@ -10,8 +10,8 @@ This document aims to describe the full setup procedure for TestRay, in three se
 Installations are provided either as a link, or as a command that should be run in the terminal (or PowerShell on Windows).
 Also note that some steps differ depending on the computer on which you want to install TestRay (Windows or Mac). In order to distinguish these, icons will be used:
 
-    ⊞ - this indicates a step that is specific to installations on Windows
-    ⌘ - this indicates a step that is specific to installations on Mac
+    **⊞ - this indicates a step that is specific to installations on Windows**
+    **⌘ - this indicates a step that is specific to installations on Mac**
 
 ## Prerequisites: TestRay
 
