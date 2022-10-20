@@ -1,0 +1,283 @@
+
+# Testcase for 2 person call using showcase audio setup phones
+TestDiscord2PersonCallRemote:
+  Vars:
+    TEST_TIME: "720"
+    Android_USER: remoteAndroidAV
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case
+      Value: AndroidDiscordConnectToCall
+      Role: $AND_CLI_Android_USER$
+    - Type: sleep
+      Time: $AND_CLI_TEST_TIME$
+      Role: shell
+
+# Testcase for disconnecting all possible participants in the call
+DiscordDisconnectAllParticpants:
+  Vars:
+    TEST_TIME: "720"
+    Android_USER: remoteAndroidAV
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case
+      Value: AndroidDiscordDisconnectAllParticipants
+      Role: $AND_CLI_Android_USER$
+
+
+# Testcase to have users interact with each other
+DiscordAndroidInteractions:
+  Vars:
+    Android_USER: localAndroid
+    Android_2USER: localAndroid2
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+    - Role: $AND_CLI_Android_2USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_2USER$
+    - Type: start_record
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TL"
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnChannel
+      Vars:
+        ChannelName: "general"
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TEST"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Test"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TeSt"
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Hi!"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "I will call him"
+      Role: $AND_CLI_Android_2USER$
+    - Type: end_record
+      Role: $AND_CLI_Android_USER$
+      Value: DiscordAndroid1.mp4
+    - Type: end_record
+      Role: $AND_CLI_Android_USER2$
+      Value: DiscordAndroid2.mp4
+
+DiscordScenarioGeneration: # TC for creating all discord interactions
+  Vars:
+    Android_1USER: localAndroid
+    Android_2USER: localAndroid2
+  Roles:
+    - Role: $AND_CLI_Android_1USER$
+      App: Discord
+    - Role: $AND_CLI_Android_2USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case # Setup
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_1USER$
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_2USER$
+    - Type: sync
+    - Type: start_record # Start recording on all participants
+      Role: $AND_CLI_Android_1USER$
+      Bitrate: 40000000
+    - Type: start_record
+      Role: $AND_CLI_Android_2USER$
+      Bitrate: 40000000
+    - Type: case # Entering the testray lovers server on all devices sequentially
+      Value: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TL"
+      Role: $AND_CLI_Android_1USER$
+    - Type: case
+      Value: AndroidClickOnChannel
+      Vars:
+        ChannelName: "general"
+      Role: $AND_CLI_Android_1USER$
+    - Type: case
+      Value: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TL"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnChannel
+      Vars:
+        ChannelName: "general"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case # Interactions in the channel
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TEST"
+      Role: $AND_CLI_Android_1USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Test"
+      Role: $AND_CLI_Android_1USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TeSt"
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Hi!"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "I will call him"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnDirectMessages
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSelectUserInDM
+      Role: $AND_CLI_Android_2USER$
+      Vars:
+        UserToSelect: testShowcaseUser2
+    - Type: case
+      Value: AndroidCallCurrentlySelectedUser
+      Role: $AND_CLI_Android_2USER$
+      # End video recordings
+    - Type: end_record
+      Role: $AND_CLI_Android_1USER$
+      Value: DiscordAndroid1.mp4
+    - Type: end_record
+      Role: $AND_CLI_Android_2USER$
+      Value: DiscordAndroid2.mp4
+
+DiscordAndroid1ScenarioGeneration: # TC for creating Android video 1
+  Vars:
+    Android_USER: localAndroid
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_USER$
+    - Type: start_record
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TL"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidClickOnChannel
+      Vars:
+        ChannelName: "general"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TEST"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Test"
+      Role: $AND_CLI_Android_USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "TeSt"
+    - Type: end_record
+      Role: $AND_CLI_Android_USER$
+
+DiscordAndroid2ScenarioGeneration: # TC for creating Android video 2
+  Vars:
+    Android_2USER: localAndroid2
+  Roles:
+    - Role: $AND_CLI_Android_2USER$
+      App: Discord
+    - Role: shell
+      App: command
+  Actions:
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_2USER$
+    - Type: start_record
+      Role: $AND_CLI_Android_2USER$
+      Bitrate: 40000000
+      Resolution: 2340x1080
+    - Type: case
+      Value: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TL"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnChannel
+      Vars:
+        ChannelName: "general"
+      NoRaise: true
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Hi!"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "I will call him"
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidToggleDrawer
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidClickOnDirectMessages
+      Role: $AND_CLI_Android_2USER$
+    - Type: case
+      Value: AndroidSelectUserInDM
+      Role: $AND_CLI_Android_2USER$
+      Vars:
+        UserToSelect: testShowcaseUser2
+    - Type: case
+      Value: AndroidCallCurrentlySelectedUser
+      Role: $AND_CLI_Android_2USER$
+    - Type: end_record
+      Role: $AND_CLI_Android_2USER$
+      Value: DiscordAndroid2.mp4
+      Resolution: 2340x1080
+
+

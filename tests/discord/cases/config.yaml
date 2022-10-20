@@ -1,0 +1,24 @@
+Apps:
+  #app configuration for discord
+  Discord:
+    iOSBundle: com.hammerandchisel.discord
+    Package: com.discord
+    Activity: com.discord.main.MainActivity
+  VLC:
+  #app configuration for VLC
+    iOSBundle: org.videolan.vlc-ios
+    Package: org.videolan.vlc
+    Activity: org.videolan.vlc.gui.video.VideoPlayerActivity
+Devices:
+  - role: shell
+  - role: localAndroid
+    platform: Android
+  - role: localAndroid2
+    platform: Android
+  - role: localAndroid3
+    platform: Android
+  - role: localAndroid4
+    platform: Android
+  - role: remoteAndroidAV
+    platform: Android
+    appiumUrl: http://172.16.117.7:4723/wd/hub

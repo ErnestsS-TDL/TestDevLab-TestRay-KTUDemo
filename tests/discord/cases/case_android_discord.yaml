@@ -1,0 +1,176 @@
+AndroidDiscordConnectToCall:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Precases:
+    - AndroidDisconectCallParticipants
+    - TakeCareOfFailedDisconectParticpant
+  Actions:
+    - Type: case
+      Value: AndroidMakeSureWereInCorrectServer
+      Vars:
+        ServerInitials: "TS"
+    - Type: case
+      Value: AndroidOpenGeneralAudioChannel
+    - Type: click # Joining with unmuted audio
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/call_preview_join_voice")
+    - Type: sleep # Waiting for the UI for the button to load
+      Time: 3
+    - Type: click # Click the page for the UI to show up
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/call_container")
+      OffsetX: 100
+      OffsetY: 150
+    - Type: click # Enabling video
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/video_button")
+    - Type: sleep
+      Time: $AND_CLI_TEST_TIME$
+
+AndroidMakeSureWereInCorrectServer:
+  Vars:
+    ServerInitials: TS
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click # Going to the main side bar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+      NoRaise: true
+    - Type: case
+      Name: AndroidClickOnServer
+      Vars:
+        ServerInitials: "TS"
+    - Type: click # Getting the channel sidebar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+
+AndroidClickOnServer:
+  Vars:
+    ServerInitials: "TS" # Default server value
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click # Clicking on the correct server
+      Strategy: uiautomator
+      Id: text("$AND_CLI_ServerInitials$")
+
+AndroidClickOnChannel:
+  Vars:
+    ChannelName: "general" # Default server value
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click # Clicking on the correct server
+      Strategy: accessibility_id
+      Id: "$AND_CLI_ChannelName$ (text channel)"
+      NoRaise: true
+
+AndroidSendTextInChannel:
+  Vars:
+    MessageToSend: "Test" # Text to send in current channel
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: send_keys
+      Strategy: id
+      Id: com.discord:id/chat_input_edit_text
+      Value: $AND_CLI_MessageToSend$
+    - Type: click
+      Strategy: accessibility_id
+      Id: Send
+
+AndroidClickOnDirectMessages:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: xpath
+      Id: //android.widget.Button[@content-desc="Direct Messages"]
+
+AndroidToggleDrawer:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: Toggle drawer
+
+AndroidDiscordPrecaseCloseMessages:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+
+AndroidOpenGeneralAudioChannel:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click # Joining the voice channel
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/channels_item_voice_channel_speaker")
+
+TakeCareOfFailedDisconectParticpant:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+
+AndroidDisconectCallTopmostParticipant:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/voice_user_list_item_user_name")
+    - Type: sleep
+      Time: 2
+    - Type: swipe_up
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/user_profile_admin_edit_member")
+    - Type: click
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/user_profile_admin_server_disconnect")
+
+AndroidDiscordDisconnectAllParticipants:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: case
+      Value: AndroidMakeSureWereInCorrectServer
+      Vars:
+        ServerInitials: "TS"
+    - Type: case
+      Value: AndroidOpenGeneralAudioChannel
+    - Type: case
+      Value: AndroidDisconectCallTopmostParticipant
+
+AndroidSelectUserInDM:
+  Vars:
+    UserToSelect: "Test" # Text from which try to find and click on user
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: "$AND_CLI_UserToSelect$ (direct message)"
+
+AndroidCallCurrentlySelectedUser:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: "Start Voice Call"
