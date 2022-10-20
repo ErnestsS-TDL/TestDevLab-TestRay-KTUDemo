@@ -24,12 +24,11 @@ TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 [See here for full installation/setup instructions.](./SETUP.md)
 
 After the required installations are complete you can proceed to download the code base and continue with the setup.
-
-
-
-
-
-
+|
+|
+|
+|
+|
 One way to install the framework is by creating a Gemfile with the following content and then running `bundle install`:
 
 <pre>
