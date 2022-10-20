@@ -4,7 +4,7 @@
 TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium and Appium. While originally compatible only with Android, in its current iteration it can also automate iOS, web, Windows and Mac applications - and with multi-platform support!
 
 ## Index
-1. [First setup](#firstsetup)
+1. [First Time Setup](#firstsetup)
 2. [Installation](#installation)
 3. [TestRay Examples](#examples)
 4. [Configuration and Steps](#conf_steps)
@@ -17,7 +17,7 @@ TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium an
 11. [Action Types](#actions)
 
 
-## <a id="firstsetup"></a>First Setup
+## <a id="firstsetup"></a>First Time Setup
 TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 
 **Before running tests the appropriate environment steup is required! To setup your computer for using Testray - go through the setup process!**
