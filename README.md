@@ -20,7 +20,10 @@ TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium an
 TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 
 **Before running tests the appropriate environment steup is required! To setup your computer for using Testray - go through the setup process!**
+
 [See here for full installation/setup instructions.](./SETUP.md)
+
+<details><summary>Click to expand</summary>
 
 One way to install the framework is by creating a Gemfile with the following content and then running `bundle install`:
 
@@ -963,4 +966,5 @@ Operation examples:
           Operation: visible/eq/neq/visible_for
           Raise: true/false # If you want the condition to raise an error
 
+</details>
 
