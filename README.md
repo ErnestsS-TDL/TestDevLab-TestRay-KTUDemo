@@ -19,6 +19,9 @@ TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium an
 ## <a id="installation"></a>Installation
 TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 
+Before running tests the appropriate environment steup is required! To setup your computer for using Testray - go through the setup process!
+[See here for full installation/setup instructions.](./SETUP.md)
+
 One way to install the framework is by creating a Gemfile with the following content and then running `bundle install`:
 
 <pre>
@@ -32,8 +35,6 @@ then you can use `bundle install --binstubs` to generate a bin folder with the t
 </pre>
 
 Another way to install master is to download this project and use `rake install`
-
-[See here for full installation instructions.](./SETUP.md)
 
 If you do not need the full YAML test suite alongside TestRay, and have set up the prerequisites, you can install TestRay on its own like so:
 <pre>rake install</pre>
