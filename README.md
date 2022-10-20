@@ -4,19 +4,20 @@
 TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium and Appium. While originally compatible only with Android, in its current iteration it can also automate iOS, web, Windows and Mac applications - and with multi-platform support!
 
 ## Index
-1. [Installation](#installation)
-2. [TestRay Examples](#examples)
-3. [Configuration and Steps](#conf_steps)
-4. [Usage](#usage)
-5. [Writing Steps](#writing_steps)
-6. [Creating Config File for Apps and Devices](#conf_file_app_dev)
-7. [Create Test Case](#test_case)
-8. [Vars](#vars)
-9. [Roles](#roles)
-10. [Action Types](#actions)
+1. [First setup](#firstsetup)
+2. [Installation](#installation)
+3. [TestRay Examples](#examples)
+4. [Configuration and Steps](#conf_steps)
+5. [Usage](#usage)
+6. [Writing Steps](#writing_steps)
+7. [Creating Config File for Apps and Devices](#conf_file_app_dev)
+8. [Create Test Case](#test_case)
+9. [Vars](#vars)
+10. [Roles](#roles)
+11. [Action Types](#actions)
 
 
-## <a id="installation"></a>Installation
+## <a id="firstsetup"></a>First Setup
 TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 
 **Before running tests the appropriate environment steup is required! To setup your computer for using Testray - go through the setup process!**
@@ -24,11 +25,9 @@ TestRay has been tested to work on both Mac (Intel/M1) and Windows.
 [See here for full installation/setup instructions.](./SETUP.md)
 
 After the required installations are complete you can proceed to download the code base and continue with the setup.
-|
-|
-|
-|
-|
+
+
+## <a id="installation"></a>Installation
 One way to install the framework is by creating a Gemfile with the following content and then running `bundle install`:
 
 <pre>
