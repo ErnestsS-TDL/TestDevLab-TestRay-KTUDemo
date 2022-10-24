@@ -11,12 +11,12 @@ DiscordJoinTextChannelSendMessage:
     - Role: $AND_CLI_Android_USER$
       App: Discord
       Capabilities:
-        #Nokia
+        #Motorolla
         udid: "PT19655JA1242707215"
     - Role: $AND_CLI_Android_USER2$
       App: Discord
       Capabilities:
-        #Samsung
+        #Nokia
         udid: "ZT3229HH3J"
     - Role: shell
       App: command
