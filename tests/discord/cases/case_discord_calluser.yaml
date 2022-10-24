@@ -1,0 +1,110 @@
+DiscordCallUser:
+  ParallelRoles: true
+  Vars:
+    Android_USER: localAndroid
+    Android_USER2: localAndroid2
+    user1: "KTUDEMO1"
+    user2: "KTUDEMO2"
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+      Capabilities:
+        #Nokia 
+        udid: "PT19655JA1242707215"
+    - Role: $AND_CLI_Android_USER2$
+      App: Discord
+      Capabilities:
+        #Samsung
+        udid: "ZT3229HH3J"
+    - Role: shell
+      App: command
+  Actions:
+    # select specified user in DM
+    - Type: case
+      Value: AndroidSelectUserInDM
+      Role: $AND_CLI_Android_USER$
+      Vars:
+        username: $AND_CLI_user2$
+    # Call currently selected user in DM
+    - Type: case
+      Value: AndroidCallCurrentlySelectedUser
+      Role: $AND_CLI_Android_USER$
+    - Type: sync
+    # Second user Joins the call
+    - Type: case
+      Value: AndroidJoinOngoingCall
+      Role: $AND_CLI_Android_USER2$
+    - Type: sleep
+      Time: 10
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    - Type: case
+    # Disconnect both users from the call
+      Value: AndroidDisconectCurrentDMCall
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    - Type: sleep
+      Time: 5
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+
+
+DiscordCallUserAndRecord:
+  ParallelRoles: true
+  Vars:
+    Android_USER: localAndroid
+    Android_USER2: localAndroid2
+    user1: "KTUDEMO1"
+    user2: "KTUDEMO2"
+    SoundcardDevice: "SoundcardOut"
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+      Capabilities:
+        #Nokia 
+        udid: "PT19655JA1242707215"
+    - Role: $AND_CLI_Android_USER2$
+      App: Discord
+      Capabilities:
+        #Samsung
+        udid: "ZT3229HH3J"
+    - Role: shell
+      App: command
+  Actions:
+    # select specified user in DM
+    - Type: case
+      Value: AndroidSelectUserInDM
+      Role: $AND_CLI_Android_USER$
+      Vars:
+        username: $AND_CLI_user2$
+    # Call currently selected user in DM
+    - Type: case
+      Value: AndroidCallCurrentlySelectedUser
+      Role: $AND_CLI_Android_USER$
+    - Type: sync
+    # Second user Joins the call
+    - Type: case
+      Value: AndroidJoinOngoingCall
+      Role: $AND_CLI_Android_USER2$
+    - Type: click
+      Strategy: accessibility_id
+      Id: "Toggle microphone"
+      Role: $AND_CLI_Android_USER2$
+    - Type: sync
+    # Play audio file from caller
+    - Type: case
+      Value: AndroidPlaybackAudio
+      Role: $AND_CLI_Android_USER$
+    # Record audio file from reciever
+    - Type: case
+      Value: AndroidRecordAudio
+      Role: $AND_CLI_Android_USER2$
+    - Type: sync
+    # Sleep while audio plays
+    - Type: sleep
+      Time: 30
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    # Disconnect both users from the call
+    - Type: case
+      Value: AndroidDisconectCurrentCall
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    - Type: sleep
+      Time: 5
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$

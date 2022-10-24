@@ -1,0 +1,95 @@
+DiscordJoinTextChannelSendMessage:
+  ParallelRoles: true
+  Vars:
+    Android_USER: localAndroid
+    Android_USER2: localAndroid2
+    serverName: "DEMO SERVER"
+    serverChannel: "#general"
+    user1: "KTUDEMO1"
+    user2: "KTUDEMO2"
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+      Capabilities:
+        #Nokia
+        udid: "PT19655JA1242707215"
+    - Role: $AND_CLI_Android_USER2$
+      App: Discord
+      Capabilities:
+        #Samsung
+        udid: "ZT3229HH3J"
+    - Role: shell
+      App: command
+  Actions:
+    # Select corrent server for users
+    - Type: case
+      Value: AndroidMakeSureWereInCorrectServer
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    # Navigate to text channel
+    - Type: case
+      Value: AndroidClickOnTextChannel
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+    # First user sends message
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Hello @$AND_CLI_user2$"
+      Role: $AND_CLI_Android_USER$
+    - Type: sync
+    # Second user sends message
+    - Type: case
+      Value: AndroidSendTextInChannel
+      Vars:
+        MessageToSend: "Hi @$AND_CLI_user1$!"
+      Role: $AND_CLI_Android_USER2$
+    - Type: sync
+    # Last user deletes it's message
+    - Type: case
+      Value: AndroidDeleteLastMessage
+      Role: $AND_CLI_Android_USER2$
+    - Type: sync
+    - Type: sleep
+      Time: 3
+      Role: $AND_CLI_Android_USER$
+    # First user deletes it's message
+    - Type: case
+      Value: AndroidDeleteLastMessage
+      Role: $AND_CLI_Android_USER$
+    - Type: sleep
+      Time: 10
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$
+  
+
+DiscordConnectFourUsersToVoiceChannel:
+  ParallelRoles: true
+  Vars:
+    Android_USER: localAndroid
+    Android_USER2: localAndroid2
+    Android_USER3: localAndroid3
+    serverName: "DEMO SERVER"
+    voiceChannelName: "General"
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+    - Role: $AND_CLI_Android_USER2$
+      App: Discord
+    - Role: $AND_CLI_Android_USER3$
+      App: Discord
+  Actions:
+    - Type: case
+      Value: AndroidMakeSureWereInCorrectServer
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$
+    - Type: sync
+    - Type: case
+      Value: AndroidClickOnVoiceChannel
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$
+      Vars:
+        voiceChannelName: "$AND_CLI_voiceChannelName$"
+    - Type: sync
+    - Type: sleep
+      Time: 10
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$
+    - Type: case
+      Value: AndroidDiscordDisconnectAllParticipants
+
+

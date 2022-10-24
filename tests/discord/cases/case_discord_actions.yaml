@@ -1,0 +1,178 @@
+AndroidDiscordConnectToCall:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Precases:
+    - AndroidDisconectCallParticipants
+    - TakeCareOfFailedDisconectParticpant
+  Actions:
+    - Type: case
+      Value: AndroidMakeSureWereInCorrectServer
+      Vars:
+        ServerInitials: "TS"
+    - Type: case
+      Value: AndroidOpenGeneralAudioChannel
+    - Type: click # Joining with unmuted audio
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/call_preview_join_voice")
+    - Type: sleep # Waiting for the UI for the button to load
+      Time: 3
+    - Type: click # Click the page for the UI to show up
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/call_container")
+      OffsetX: 100
+      OffsetY: 150
+    - Type: click # Enabling video
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/video_button")
+    - Type: sleep
+      Time: $AND_CLI_TEST_TIME$
+
+# click on right server
+AndroidMakeSureWereInCorrectServer:
+  Actions:
+    - Type: click # Going to the main side bar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+      NoRaise: true
+    - Type: case
+      Value: AndroidClickOnServer
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$,$AND_CLI_Android_USER4$
+
+# steps to click on desired server
+AndroidClickOnServer:
+  Actions:
+    - Type: click # Clicking on the correct server
+      Strategy: xpath
+      Id: //android.widget.Button[contains(@content-desc,'$AND_CLI_serverName$')]
+
+# steps to click on desired channel
+AndroidClickOnTextChannel:
+  Vars:
+    textChannelName: "general" # Default server value
+  Actions:
+    - Type: click # Going to the main side bar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+      NoRaise: true
+    - Type: click # Clicking on the correct text channe;
+      Strategy: accessibility_id
+      Id: "$AND_CLI_textChannelName$ (text channel)"
+      NoRaise: true
+
+# steps to click on desired vocie channel    
+AndroidClickOnVoiceChannel:
+  Vars:
+   voiceChannelName: "General" # Default server value
+  Actions:
+    - Type: click # Going to the main side bar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+      NoRaise: true
+    - Type: click # Clicking on the correct voice channel
+      Strategy: xpath
+      Id: //android.widget.Button[contains(@content-desc,'$AND_CLI_voiceChannelName$ (voice channel)')]
+    - Type: click
+      Strategy: xpath
+      Id: //android.widget.Button[contains(@content-desc,'Join Voice')]
+
+AndroidSendTextInChannel:
+  Vars:
+    MessageToSend: "default" # default Text to send in current channel
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: send_keys
+      Strategy: id
+      Id: com.discord:id/chat_input_edit_text
+      Value: $AND_CLI_MessageToSend$
+    - Type: click
+      Strategy: accessibility_id
+      Id: Send
+
+AndroidClickOnDirectMessages:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: xpath
+      Id: //android.widget.Button[@content-desc="Direct Messages"]
+
+AndroidToggleDrawer:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: Toggle drawer
+
+AndroidOpenGeneralAudioChannel:
+  Roles:
+    - Role: $AND_CLI_Android_USER$
+      App: Discord
+  Actions:
+    - Type: click # Joining the voice channel
+      Strategy: uiautomator
+      Id: resourceId("com.discord:id/channels_item_voice_channel_speaker")
+
+AndroidDiscordDisconnectAllParticipants:
+  Actions:
+    - Type: case
+      Value: AndroidOpenCallMenu
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$,$AND_CLI_Android_USER4$
+    - Type: case
+      Value: AndroidDisconectCurrentCall
+      Role: $AND_CLI_Android_USER$,$AND_CLI_Android_USER2$,$AND_CLI_Android_USER3$,$AND_CLI_Android_USER4$
+
+AndroidSelectUserInDM:
+  Vars:
+    username: "Test" # Text from which try to find and click on user
+  Actions:
+    - Type: click # Going to the main side bar
+      Strategy: uiautomator
+      Id: descriptionContains("Toggle drawer")
+      NoRaise: true
+    - Type: click
+      Strategy: accessibility_id
+      Id: "$AND_CLI_username$ (direct message)"
+
+AndroidCallCurrentlySelectedUser:
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: "Start Voice Call"
+
+AndroidJoinOngoingCall:
+  Actions:
+    - Type: click
+      Strategy: uiautomator
+      Id: text("Ongoing Call")
+
+AndroidDisconectCurrentCall:
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: "Disconnect"
+
+
+AndroidDeleteLastMessage:
+  Actions:
+    - Type: click_and_hold
+      Strategy: id
+      Id: com.discord:id/accessories_view
+      Index: -1
+    - Type: click
+      Strategy: uiautomator
+      Id: text("Delete Message")
+    - Type: click
+      Strategy: uiautomator
+      Id: text("Yes")
+
+AndroidOpenCallMenu:
+  Actions:
+    - Type: click
+      Strategy: id
+      Id: "android:id/content"

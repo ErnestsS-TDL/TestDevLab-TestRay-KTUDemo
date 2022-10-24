@@ -1,0 +1,15 @@
+# Setting windows input/output default device is required to be set to
+# connected soundcard, otherwise audio will be blank
+# tinkering with these commands might be required if it doesnt work
+
+AndroidRecordAudio:
+  Actions:
+    - Type: command
+      Value: "sox -q -r 44100 -t waveaudio default audioresult.mp3 trim 0 30"
+      Detach: true
+
+AndroidPlaybackAudio:
+  Actions:
+    - Type: command
+      Value: "sox -v 1 ../../spookyscary.mp3 -t waveaudio default"
+      Detach: true
